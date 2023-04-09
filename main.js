@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 // create camera , scene and renderer
 const scene = new THREE.Scene();
@@ -11,12 +12,12 @@ const camera = new THREE.PerspectiveCamera(
 const renderer = new THREE.WebGL1Renderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+camera.position.z = 20;
 
 // create a cube
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
-camera.position.z = 20;
+// const geometry = new THREE.BoxGeometry(1, 1, 1);
+// const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+// const cube = new THREE.Mesh(geometry, material);
 
 // add cube to scene
 // scene.add(cube);
@@ -31,24 +32,46 @@ camera.position.z = 20;
 // animate();
 
 // creating a line
-const material2 = new THREE.LineBasicMaterial({ color: 0x0000ff });
+// const material2 = new THREE.LineBasicMaterial({ color: 0x0000ff });
 // add geometry
-const points = [];
-points.push(new THREE.Vector3(-10, 0, 0));
-points.push(new THREE.Vector3(0, 10, 0));
-points.push(new THREE.Vector3(0, 0, 10));
-points.push(new THREE.Vector3(-10, 0, 0));
-const geometry2 = new THREE.BufferGeometry().setFromPoints(points);
+// const points = [];
+// points.push(new THREE.Vector3(-10, 0, 0));
+// points.push(new THREE.Vector3(0, 10, 0));
+// points.push(new THREE.Vector3(0, 0, 10));
+// points.push(new THREE.Vector3(-10, 0, 0));
+// const geometry2 = new THREE.BufferGeometry().setFromPoints(points);
 
 // create a line from geometry and material
-const line = new THREE.Line(geometry2, material2);
-scene.add(line);
-renderer.render(scene, camera);
+// const line = new THREE.Line(geometry2, material2);
+// scene.add(line);
+// renderer.render(scene, camera);
 // render line in html
+// function animate() {
+//   requestAnimationFrame(animate);
+//   line.rotation.x += 0.01;
+//   line.rotation.y += 0.01;
+//   renderer.render(scene, camera);
+// }
+// animate();
+
+// add a 3d model
+const loader = new GLTFLoader();
+loader.load(
+  "./3d_models/shiba/scene.gltf",
+  function (gltf) {
+    console.log(gltf);
+    scene.add(gltf.scene);
+  },
+  undefined,
+  function (err) {
+    console.log(err);
+  }
+);
+
 function animate() {
   requestAnimationFrame(animate);
-  line.rotation.x += 0.01;
-  line.rotation.y += 0.01;
+  //   line.rotation.x += 0.01;
+  //   line.rotation.y += 0.01;
   renderer.render(scene, camera);
 }
 animate();
